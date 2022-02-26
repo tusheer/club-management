@@ -10,8 +10,8 @@ const port = process.env.PORT || 4000;
 const start = async (): Promise<void> => {
     const configureRoutes = async (app: Express): Promise<Express> => {
         app.use(handleRequest);
-        app.use(handleError);
         app = await initModules(app);
+        app.use(handleError);
         return app;
     };
 

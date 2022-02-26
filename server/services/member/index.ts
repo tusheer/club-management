@@ -10,6 +10,11 @@ import { NotFound } from '../../common/errors';
 
 const modelName = 'Member';
 
+const get = async ({ skip, limit }: { skip: number; limit: number }) => {
+    const result = await getAllMember(modelName, { skip, limit });
+    return result;
+};
+
 const save = async (member: IMember) => {
     const savedItem = await saveMember(member, modelName);
     return savedItem._id;
@@ -22,11 +27,6 @@ const update = async (member: IMember) => {
 
 const deleteById = async (id: string) => {
     const result = await deleteMember(id, modelName);
-    return result;
-};
-
-const get = async () => {
-    const result = await getAllMember(modelName);
     return result;
 };
 

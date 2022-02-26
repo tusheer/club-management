@@ -26,7 +26,7 @@ const schema = new Schema<IMember>(
         },
         membershipType: {
             type: String,
-            enum: ['NORMAL'],
+            enum: ['VIP', 'CHILDREN', 'WOMEN', 'PLAYER', 'FOREIGNER', 'NORMAL'],
             default: 'NORMAL',
         },
         isDelete: {

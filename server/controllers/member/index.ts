@@ -78,10 +78,9 @@ const deleteHandler = async (req, res, next) => {
 };
 
 const getHandler = async (req, res, next) => {
+    const { skip = 0, limit = 10 } = req.query;
     try {
-        const data = await get();
-        console.log(data)
-        console.log(data)
+        const data = await get({ skip, limit });
         res.status(200).send(data);
     } catch (error) {
         return next(error, req, res);

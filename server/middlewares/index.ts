@@ -1,11 +1,10 @@
-var jwt = require('jsonwebtoken');
-const { GeneralError, BadRequest } = require('../common/errors');
+import jwt from 'jsonwebtoken';
+import { GeneralError, BadRequest } from '../common/errors';
 
 const handleError = async (err, req, res, next) => {
     if (res?.headersSent) {
         return next(err);
     }
-
     let code = 500;
     if (err instanceof GeneralError) {
         code = err.getCode();

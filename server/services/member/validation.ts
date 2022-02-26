@@ -1,15 +1,16 @@
 import Joi from 'joi';
 
 const schema = Joi.object().keys({
-    _id: Joi.string().optional(),
-    name: Joi.string().min(3).max(30).required(),
-    sku: Joi.string().min(3).max(30).required(),
-    description: Joi.string().min(3).max(30),
-    cost: Joi.number().required(),
-    price: Joi.number().required(),
-    size: Joi.number().min(1).max(10).required(),
-    manufacturingDate: Joi.date().optional(),
-    expiryDate: Joi.date().optional(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    avatar: Joi.object()
+        .keys({
+            url: Joi.string().required(),
+        })
+        .optional(),
+    membershipType: Joi.string().valid('VIP', 'CHILDREN', 'WOMEN', 'PLAYER', 'FOREIGNER', 'NORMAL').required(),
+    occupation: Joi.string().required(),
 });
 
 const validate = (data) => {

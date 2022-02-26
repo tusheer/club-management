@@ -28,8 +28,8 @@ const getById = async (id, modelName) => {
     return model;
 };
 
-const getAll = async (modelName) => {
-    let model = await mongoose.models[modelName].find();
+const getAll = async (modelName, { skip, limit }: { skip: number; limit: number }) => {
+    let model = await mongoose.models[modelName].find().skip(skip).limit(limit);
     if (model == null) {
         throw new Error('Product not found by the id: ');
     }
