@@ -19,7 +19,7 @@ const start = async (): Promise<void> => {
         await configureRoutes(app);
         app.listen(port, async () => {
             console.log('server is running on port', port);
-            // await connectWithDb();
+            await connectWithDb();
         });
     } catch (error) {
         console.log('error');
