@@ -2,7 +2,7 @@ import express from 'express';
 import { save, update, deleteById, getById, search, count, get } from '../../services/member';
 import { NotFound } from '../../common/errors';
 import validate from '../../services/member/validation';
-import { handleValidation } from '../../middlewares/index';
+import { avatarUpload, handleValidation } from '../../middlewares/index';
 const router = express.Router();
 
 const getByIdHandler = async (req, res, next) => {
@@ -21,9 +21,21 @@ const getByIdHandler = async (req, res, next) => {
 
 const postHandler = async (req, res, next) => {
     try {
-        const body = req.body;
-        const id = await save(body);
-        res.status(201).send(id);
+        let newMember;
+        if (req.files && req.files.length > 0) {
+            newMember = {
+                ...req.body,
+                avatar: {
+                    url: req.files[0].filename,
+                },
+            };
+        } else {
+            newMember = {
+                ...req.body,
+            };
+        }
+        const member = await save(newMember);
+        res.status(201).send(member);
     } catch (error) {
         return next(error, req, res);
     }
@@ -78,9 +90,9 @@ const deleteHandler = async (req, res, next) => {
 };
 
 const getHandler = async (req, res, next) => {
-    const { skip = 0, limit = 10 } = req.query;
+    const { page = 0, limit = 10 } = req.query;
     try {
-        const data = await get({ skip, limit });
+        const data = await get({ page, limit });
         res.status(200).send(data);
     } catch (error) {
         return next(error, req, res);
@@ -89,7 +101,7 @@ const getHandler = async (req, res, next) => {
 
 router.get('/', getHandler);
 router.get('/:id', getByIdHandler);
-router.post('/', handleValidation(validate), postHandler);
+router.post('/', avatarUpload, handleValidation(validate), postHandler);
 router.put('/', putHandler);
 router.post('/search', searchHandler);
 router.post('/count', countHandler);

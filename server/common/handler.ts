@@ -36,4 +36,24 @@ const getAll = async (modelName, { skip, limit }: { skip: number; limit: number 
     return model;
 };
 
-export { save, update, deleteById, getById, getAll };
+const getWithPagination = async (modelName, { page, limit }: { page: number; limit: number }) => {
+    const mongoModel = mongoose.models[modelName] as any;
+    const myCustomLabels = {
+        totalDocs: 'count',
+        docs: 'result',
+        meta: 'meta',
+    };
+    const options = {
+        sort: { createdAt: -1 },
+        limit: limit,
+        page: page,
+        customLabels: myCustomLabels,
+    };
+    const model = await mongoModel.paginate({}, options);
+    if (model == null) {
+        throw new Error('Product not found by the id: ');
+    }
+    return model;
+};
+
+export { save, update, deleteById, getById, getAll, getWithPagination };

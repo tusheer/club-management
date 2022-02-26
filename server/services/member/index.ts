@@ -4,25 +4,26 @@ import {
     getById as getMemberById,
     deleteById as deleteMember,
     getAll as getAllMember,
+    getWithPagination,
 } from '../../common/handler';
 import Member, { IMember } from '../../models/member';
 import { NotFound } from '../../common/errors';
 
 const modelName = 'Member';
 
-const get = async ({ skip, limit }: { skip: number; limit: number }) => {
-    const result = await getAllMember(modelName, { skip, limit });
+const get = async ({ page, limit }: { page: number; limit: number }) => {
+    const result = await getWithPagination(modelName, { page, limit });
     return result;
 };
 
 const save = async (member: IMember) => {
     const savedItem = await saveMember(member, modelName);
-    return savedItem._id;
+    return savedItem;
 };
 
 const update = async (member: IMember) => {
     const updatedItem = await updateMember(member, modelName);
-    return updatedItem._id;
+    return updatedItem;
 };
 
 const deleteById = async (id: string) => {
