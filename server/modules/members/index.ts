@@ -1,6 +1,6 @@
 // const { authenticateRequest } = require("../../common/middlewares");
-import memberControler from '../../controllers/member';
+import memberControler from '../../controllers/members';
 import request from '../../common/request';
 export default request((app) => {
-    app.use('/api/member', memberControler);
+    app.use('/api/members', memberControler);
 });

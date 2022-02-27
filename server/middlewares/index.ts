@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { GeneralError, BadRequest } from '../common/errors';
 import uploader from '../common/fileupload';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const handleError = async (err, req, res, next) => {
     if (res?.headersSent) {
@@ -52,7 +54,6 @@ const handleValidation = (validate) => {
 const authenticateRequest = async (req, res, next) => {
     let auth = req.headers['authorization'];
     if (auth) {
-        auth = auth.replace('Bearer ', '');
         jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 res.status(401).send({

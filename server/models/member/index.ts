@@ -45,6 +45,6 @@ const schema = new Schema<IMember>(
 );
 
 schema.plugin(mongoosePaginate);
-const Product = model<IMember>('Member', schema);
+const Member = model<IMember>('Member', schema);
 
-export default Product;
+export default Member;

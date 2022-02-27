@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-const save = async (item, modelName) => {
-    const model = new mongoose.models[modelName](item);
-    const savedItem = await model.save();
+const save = async (item, model) => {
+    const _model = new model(item);
+    const savedItem = await _model.save();
     return savedItem;
 };
 
@@ -35,6 +35,10 @@ const getAll = async (modelName, { skip, limit }: { skip: number; limit: number 
     }
     return model;
 };
+const findOne = async (modelName, request) => {
+    let model = await mongoose.models[modelName].findOne(request);
+    return model;
+};
 
 const getWithPagination = async (modelName, { page, limit }: { page: number; limit: number }) => {
     const mongoModel = mongoose.models[modelName] as any;
@@ -56,4 +60,4 @@ const getWithPagination = async (modelName, { page, limit }: { page: number; lim
     return model;
 };
 
-export { save, update, deleteById, getById, getAll, getWithPagination };
+export { save, update, deleteById, getById, getAll, getWithPagination, findOne };
