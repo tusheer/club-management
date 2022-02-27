@@ -22,7 +22,12 @@ const Form = () => {
         },
         onSubmit: async () => {
             try {
-                const response = await signupAction(state);
+                const response = await signupAction({
+                    firstName: state.firstName,
+                    lastName: state.firstName,
+                    email: state.email,
+                    password: state.password,
+                });
                 if (response) {
                     console.log(response);
                 }

@@ -7,8 +7,8 @@ interface ISinginBody {
 
 const signinAction = async (body: ISinginBody) => {
     try {
-        const response = http.post('/signin', body);
-        return response;
+        const response = await http.post('/auth/login', body);
+        return response.data;
     } catch (error) {
         throw new Error();
     }

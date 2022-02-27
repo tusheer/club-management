@@ -1,5 +1,6 @@
 import express from 'express';
 import { handleValidation } from '../../middlewares/index';
+import { BadRequest } from '../../common/errors';
 import { createUser, checkUser, searchOne, createUserValidate } from '../../services/auth';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
@@ -22,32 +23,33 @@ const createUserHandler = async (req, res, next) => {
                 authToken: createToken(userData._id, userData.email),
             });
         } else {
-            throw new Error('User already exist')
+            throw new BadRequest('User already exist');
         }
     } catch (error) {
         next(error);
     }
 };
 
-const loginHandler = async (req, res) => {
-    if (req.body.email && req.body.password) {
-        let user = await checkUser(req.body.email, req.body.password);
-        if (user) {
-            res.status(200).send({
-                status: 'ok',
-                result: {
-                    ...user,
-                },
-                authToken: createToken(user._id, user.email),
-            });
-            return;
+const loginHandler = async (req, res, next) => {
+    try {
+        if (req.body.email && req.body.password) {
+            let user = await checkUser(req.body.email, req.body.password);
+            if (user) {
+                res.status(200).send({
+                    status: 'ok',
+                    result: {
+                        ...user,
+                    },
+                    authToken: createToken(user._id, user.email),
+                });
+                return;
+            } else {
+                throw new BadRequest('Invalid email or password ');
+            }
         }
+    } catch (error) {
+        next(error);
     }
-
-    res.status(400).send({
-        message: 'Invalid email or password ',
-    });
-    return;
 };
 
 const checkUserEmailHandler = async (req, res) => {

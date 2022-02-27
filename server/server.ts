@@ -22,7 +22,7 @@ const start = async (): Promise<void> => {
             await connectWithDb();
         });
     } catch (error) {
-        console.log('error');
+        console.log(error);
     }
 };
 

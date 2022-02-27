@@ -9,10 +9,13 @@ interface ISingupBody {
 
 const signupAction = async (body: ISingupBody) => {
     try {
-        const response = http.post('/signup', body);
-        return response;
+        const response = await http.post('/auth/register', body);
+        if (response.status === 201) {
+            return response.data;
+        }
+        throw new Error();
     } catch (error) {
-        return null;
+        throw new Error();
     }
 };
 
