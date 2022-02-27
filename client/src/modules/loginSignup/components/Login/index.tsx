@@ -4,7 +4,7 @@ import Form from './Form';
 
 const Login = () => {
     return (
-        <div className="w-full">
+        <div className="w-full pb-5">
             <div className='max-w-xl px-5 pt-28  w-full '>
                 <h1 className='text-cm-purple-700 mb-4'>Signin</h1>
                 <h4 className='mb-12'>
