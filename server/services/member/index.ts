@@ -5,7 +5,7 @@ import {
     deleteById as deleteMember,
     getWithPagination,
 } from '../../common/handler';
-import validate from './validation';
+import validate from './Validator';
 import Member, { IMember } from '../../models/Member';
 import { NotFound } from '../../common/errors';
 

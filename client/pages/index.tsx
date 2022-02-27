@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React from 'react';
-import LoginContainer from '../src/modules/loginSignup/containers/LoginContainer';
+import LoginContainer from '../src/modules/SignupLogin/containers/LoginContainer';
 
 const Home: NextPage = () => {
     return (

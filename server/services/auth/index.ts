@@ -1,6 +1,6 @@
 import { NotFound } from '../../common/errors';
 import { save, findOne } from '../../common/handler';
-import { createUserValidate } from './validation';
+import { createUserValidate } from './Validator';
 import bcrypt from 'bcrypt';
 import User from '../../models/User';
 
