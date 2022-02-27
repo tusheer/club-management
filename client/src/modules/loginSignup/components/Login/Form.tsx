@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../../../common/components/Button';
 import TextInput from '../../../common/components/TextInput';
 import useForm, { validator } from '../../../../libs/useForm';
-
+import signinAction from '../../../../api/auth/signin';
 export interface IFormState {
     email: string;
     password: string;
@@ -14,7 +14,14 @@ const Form = () => {
             email: '',
             password: '',
         },
-        onSubmit: () => console.log(),
+        onSubmit: async () => {
+            try {
+                const response = await signinAction(state);
+                if (response) {
+                    console.log(response);
+                }
+            } catch (error) {}
+        },
     });
     return (
         <form onSubmit={handleSubmit}>

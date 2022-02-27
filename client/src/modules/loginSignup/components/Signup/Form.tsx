@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../../common/components/Button';
 import TextInput from '../../../common/components/TextInput';
 import useForm, { validator } from '../../../../libs/useForm';
+import signupAction from '../../../../api/auth/signup';
 export interface IFormState {
     firstName: string;
     lastName: string;
@@ -19,7 +20,14 @@ const Form = () => {
             password: '',
             confirmPassword: '',
         },
-        onSubmit: () => console.log(),
+        onSubmit: async () => {
+            try {
+                const response = await signupAction(state);
+                if (response) {
+                    console.log(response);
+                }
+            } catch (error) {}
+        },
     });
 
     return (
