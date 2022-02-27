@@ -1,0 +1,27 @@
+.notification {
+	.dropdown {
+		padding: 20px 20px 10px 21px;
+		border-radius: 4px;
+		box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.16);
+		top: calc(100% + 10px);
+		min-width: 300px;
+		.most_recent {
+			color: #9797a0;
+		}
+	}
+
+    .notification_list {
+        gap: 10px;
+        .icon {
+            width: 30px;
+            height: 30px;
+        }
+    
+        .notification_body {
+            p {
+                margin-top: 6px;
+            }
+        }
+    }
+    
+}

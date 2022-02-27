@@ -12,19 +12,19 @@ module.exports = {
 			black: colors.black,
 			white: colors.white,
 			gray: colors.trueGray,
-			"dh-green": {
-				800: "#00745a",
-				700: "#01896a",
-				400: "#A7E521",
+			"cm-purple": {
+				800: "#8A39E1",
+				700: "#9C51E0",
+				400: "#B667F1",
 			},
-			"dh-red": {
+			"cm-red": {
 				500: "#FF5B43",
 			},
-			"dh-yellow": {
+			"cm-yellow": {
 				500: "#FBBD08",
 				600: "#f2b100",
 			},
-			"dh-gray": {
+			"cm-gray": {
 				800: "#2a2a2a",
 				700: "#63636A",
 				600: "#9797A0",
@@ -35,7 +35,7 @@ module.exports = {
 			},
 		},
 		fontFamily: {
-			"dh-SFUIDisplay": "SFUIDisplay",
+			"cm-SFUIDisplay": "SFUIDisplay",
 		},
 	},
 	variants: {

@@ -1,0 +1,33 @@
+.container {
+	box-shadow: 5px 20px 20px 0 rgba(0, 0, 0, 0.06);
+	.items {
+		min-height: 44px;
+		border-bottom: 0.5px solid #e2e2e2;
+		.des_btn {
+			background-color: #f1f3f4;
+		}
+
+		.input {
+			background-color: #f1f3f4;
+			min-width: 52px;
+			border-radius: 13px;
+			&:focus {
+				outline: 0px;
+				border: solid 1px #01896a;
+			}
+		}
+	}
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+	input[type="number"] {
+		-moz-appearance: textfield;
+	}
+	.items:last-child {
+		border: none;
+	}
+}

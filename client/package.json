@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "concurrently \"next dev\" \"npm run watch:tailwind\"",
+        "dev": "concurrently \"next dev  -p 4001\" \"npm run watch:tailwind\"",
         "build": "next build",
         "build:tailwind": "concurrently \"next dev\" \"npm run watch:tailwind\"",
         "watch:tailwind": "TAILWIND_MODE=watch postcss styles/tailwind.css -o styles/build.css --watch",

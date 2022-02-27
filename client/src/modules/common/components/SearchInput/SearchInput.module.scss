@@ -1,0 +1,18 @@
+.root {
+	border-radius: 20px;
+	box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.15);
+	.search_body {
+		.tag {
+			background-color: #f4f4f4;
+		}
+	}
+}
+
+.active {
+	border-radius: 6px !important;
+	.active_input {
+		border: solid 3px #fff;
+		border-radius: 6px;
+		background-color: #f2f2f2;
+	}
+}
