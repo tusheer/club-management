@@ -21,4 +21,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
 	return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>;
 }
+
+
 export default MyApp;

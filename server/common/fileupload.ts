@@ -2,6 +2,7 @@
 import multer from 'multer';
 import path from 'path';
 import { BadRequest } from './errors';
+import fs from 'fs';
 
 function uploader(subfolder_path, allowed_file_types, max_file_size, error_msg) {
     // File upload folder
@@ -10,6 +11,9 @@ function uploader(subfolder_path, allowed_file_types, max_file_size, error_msg) 
     // define the storage
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
+            if (!fs.existsSync(UPLOADS_FOLDER)) {
+                fs.mkdirSync(UPLOADS_FOLDER, { recursive: true });
+            }
             cb(null, UPLOADS_FOLDER);
         },
         filename: (req, file, cb) => {

@@ -11,12 +11,13 @@ interface IAppHeaderProps {
 const HeaderWrapper: React.FC<IAppHeaderProps> = ({ children, style, height, className = '' }) => {
     return (
         <div
-            style={{ ...style, minHeight: `${height}px`, zIndex: 99999999 }}
-            className={`${styles.header_wraper} ${className} bg-cm-purple-700 `}
+            style={{ ...style, minHeight: `${height}px`, height: `${height}px`, zIndex: 99999999 }}
+            className={`${styles.header_wraper} ${className} bg-cm-purple-700 sticky top-0 `}
         >
             {children}
         </div>
     );
 };
 
-export default Object.assign(HeaderWrapper, { Icon });
+export default HeaderWrapper;
+export { Icon };

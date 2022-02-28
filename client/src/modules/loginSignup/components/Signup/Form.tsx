@@ -32,8 +32,8 @@ const Form = () => {
         onSubmit: () => {
             toast.promise(onSubmit(state), {
                 loading: <b>Submitting...</b>,
-                success: <b>Successfully login </b>,
-                error: <b>Email or password invalid, Try again.</b>,
+                success: <b>Successfully re </b>,
+                error: <b>Invalid signup, Try again.</b>,
             });
         },
     });

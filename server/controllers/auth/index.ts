@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 dotenv.config();
-
-const createToken = (id, email) =>
-    jwt.sign({ id: id, email: email, exp: Math.floor(Date.now() / 1000) + parseInt(process.env.JWT_EXPIRES_IN) }, process.env.JWT_SECRET);
+console.log(process.env.JWT_SECRET);
+const createToken = (user) =>
+    jwt.sign({ ...user, exp: Math.floor(Date.now() / 1000) + parseInt(process.env.JWT_EXPIRES_IN) }, process.env.JWT_SECRET);
 
 const createUserHandler = async (req, res, next) => {
     try {
@@ -20,7 +20,7 @@ const createUserHandler = async (req, res, next) => {
                 status: 'ok',
                 message: 'User created successfully',
                 result: userData,
-                authToken: createToken(userData._id, userData.email),
+                authToken: createToken({ ...userData }),
             });
         } else {
             throw new BadRequest('User already exist');
@@ -40,7 +40,7 @@ const loginHandler = async (req, res, next) => {
                     result: {
                         ...user,
                     },
-                    authToken: createToken(user._id, user.email),
+                    authToken: createToken({ ...user }),
                 });
                 return;
             } else {
