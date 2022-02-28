@@ -3,26 +3,53 @@ import Button from '../../../common/components/Button';
 import TextInput from '../../../common/components/TextInput';
 import useForm, { validator } from '../../../../libs/useForm';
 import signinAction from '../../../../api/auth/signin';
+import toast, { Toaster } from 'react-hot-toast';
+import sleep from '../../../../utils/sleep';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+
 export interface IFormState {
     email: string;
     password: string;
 }
 
 const Form = () => {
+    const router = useRouter();
+    //useForm is a reusable hooks that can easily form handle and error handle.
+    //https://github.com/tusheer/useForm
+    //I have a plan to publish  it as a package
+
     const { handleSubmit, errors, state, getInputProps } = useForm<IFormState>({
         formState: {
             email: '',
             password: '',
         },
-        onSubmit: async () => {
-            try {
-                const response = await signinAction(state);
-                if (response) {
-                    console.log(response);
-                }
-            } catch (error) {}
+        onSubmit: () => {
+            toast.promise(onSubmit(state), {
+                loading: <b>Submitting...</b>,
+                success: <b>Successfully login </b>,
+                error: <b>Email or password invalid, Try again.</b>,
+            });
         },
     });
+
+    const onSubmit = async (state: IFormState) => {
+        try {
+            //I know this is something weird, but since we have a local server we cannot experience the loading time and interaction. And I never doing that in real work.
+            process.env.NODE_ENV !== 'production' && (await sleep(1000));
+
+            const response = await signinAction(state);
+            if (response) {
+                if (response) {
+                    Cookies.set('token', response.authToken);
+                    router.push('/dashboard');
+                }
+            }
+        } catch (error) {
+            throw new Error('Invalid login');
+        }
+    };
+
     return (
         <form onSubmit={handleSubmit}>
             <TextInput
@@ -54,6 +81,7 @@ const Form = () => {
                 })}
             />
             <Button className='mt-12'>Signin</Button>
+            <Toaster position='bottom-left' />
         </form>
     );
 };
