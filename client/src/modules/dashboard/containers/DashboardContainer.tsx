@@ -13,12 +13,12 @@ const DashboardContainer = () => {
             <div className='relative bg-cm-gray-200 min-h-screen'>
                 <div className='h-10 w-full bg-cm-purple-700 absolute'></div>
                 <div className='max-w-5xl mx-auto relative'>
-                    
                     <div className='rounded bg-white w-full mb-5 shadow-sm px-5 py-4'>
                         <div className='w-24 h-28 relative rounded overflow-hidden'>
                             <Image
                                 src='http://localhost:4000/static/uploads/avatars/1610928615665-1646069759000.jpeg'
                                 layout='fill'
+                                priority
                                 className=''
                             />
                         </div>
@@ -28,6 +28,7 @@ const DashboardContainer = () => {
                             <Image
                                 src='http://localhost:4000/static/uploads/avatars/1610928615665-1646069759000.jpeg'
                                 layout='fill'
+                                priority
                                 className=''
                             />
                         </div>
@@ -37,6 +38,7 @@ const DashboardContainer = () => {
                             <Image
                                 src='http://localhost:4000/static/uploads/avatars/1610928615665-1646069759000.jpeg'
                                 layout='fill'
+                                priority
                                 className=''
                             />
                         </div>
@@ -46,11 +48,11 @@ const DashboardContainer = () => {
                             <Image
                                 src='http://localhost:4000/static/uploads/avatars/1610928615665-1646069759000.jpeg'
                                 layout='fill'
+                                priority
                                 className=''
                             />
                         </div>
                     </div>
-
                 </div>
             </div>
         </React.Fragment>

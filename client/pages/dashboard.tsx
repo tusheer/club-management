@@ -1,9 +1,11 @@
-import type { NextPage, GetServerSideProps } from 'next';
+import type { NextPage, GetServerSidePropsContext, GetServerSideProps } from 'next';
 import Head from 'next/head';
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
+import AuthLayout from '../src/layouts/AuthLayout';
 import DashboardContainer from '../src/modules/dashboard/containers/DashboardContainer';
+import { withSession } from './_app';
 
-const Home: NextPage = () => {
+const Dashboard = () => {
     return (
         <div>
             <Head>
@@ -16,16 +18,19 @@ const Home: NextPage = () => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const { req } = ctx;
-
-    console.log(req.cookies.token);
-
-    return {
-        props: {},
-    };
-
-    // return { redirect: { destination: '/sign-in', permanent: false } };
+Dashboard.getLayout = (page: ReactElement) => {
+    return <AuthLayout>{page}</AuthLayout>;
 };
 
-export default Home;
+export const getServerSideProps = withSession(async (ctx, user) => {
+    if (user) {
+        return {
+            props: {
+                user,
+            },
+        };
+    }
+    return { redirect: { destination: '/', permanent: false } };
+});
+
+export default Dashboard;

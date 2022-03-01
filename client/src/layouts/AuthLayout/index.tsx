@@ -1,10 +1,12 @@
-import { ReactNode, FC } from "react";
+import { ReactNode, FC, ReactChildren, ReactElement } from 'react';
 
 type Props = {
-	children: ReactNode;
+    children: ReactElement;
+
 };
 
-const AuthLayout: FC<Props> = ({ children }) => {
-	return <>{children}</>
+const AuthLayout: FC<Props> = ({ children}) => {
+	console.log(children?.props || "")
+    return <>{children}</>;
 };
 export default AuthLayout;
