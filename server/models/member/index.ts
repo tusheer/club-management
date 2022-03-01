@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import mongoosePaginate  from 'mongoose-paginate-v2';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 type MembershipType = 'VIP' | 'CHILDREN' | 'WOMEN' | 'PLAYER' | 'FOREIGNER' | 'NORMAL';
 
@@ -7,6 +7,7 @@ export interface IMember {
     firstName: string;
     lastName: string;
     email: string;
+    uid: string;
     number: string;
     avatar?: {
         url: string;
@@ -24,6 +25,7 @@ const schema = new Schema<IMember>(
         lastName: { type: String, required: true },
         email: { type: String, require: true },
         number: { type: String, required: true },
+        uid: { type: String, required: true },
         avatar: {
             url: String,
         },
