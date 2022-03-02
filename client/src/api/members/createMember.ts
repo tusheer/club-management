@@ -2,14 +2,8 @@ import { AxiosResponse } from 'axios';
 import { http } from '../../../config';
 import { IMember, MembershipType } from '../../types/Member';
 
-interface ICreateMember {
-    firstName: string;
-    lastName: string;
-    email: string;
-    number: string;
-    file: File;
-    membershipType: MembershipType;
-    occupation: string;
+interface ICreateMember extends IMember {
+    file: File | null;
 }
 interface ICreateResponse {
     success: string;
@@ -17,11 +11,13 @@ interface ICreateResponse {
     result: IMember;
 }
 
-const createMemberAction = async (body: ICreateMember) => {
+const createMemberAction = async (body: Omit<ICreateMember, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => {
     const formData = new FormData();
 
     Object.entries(body).forEach(([key, value]) => {
-        formData.append(key, value);
+        if (value !== null) {
+            formData.append(key, value);
+        }
     });
 
     try {

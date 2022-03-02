@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import getAllMembers from '../api/members/getAllMembers';
 import { IMember } from '../types/Member';
 import { IMeta } from '../types/Meta';
@@ -21,8 +21,8 @@ const globalSlice = createSlice({
     name: 'members',
     initialState,
     reducers: {
-        onDarkModeSelect(state) {
-            // state.darkMode = true;
+        addNewMember(state, action: PayloadAction<IMember>) {
+            state.members = [action.payload, ...state.members];
         },
     },
     extraReducers: (builder) => {
@@ -49,5 +49,5 @@ export const fetchMembers = createAsyncThunk('members/fetch', async ({ limit, of
     return response;
 });
 
-export const { onDarkModeSelect } = globalSlice.actions;
+export const { addNewMember } = globalSlice.actions;
 export default globalSlice.reducer;

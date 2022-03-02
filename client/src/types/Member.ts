@@ -9,7 +9,7 @@ export interface IMember {
     avatar: {
         url: string;
     };
-    membershipType?: MembershipType;
+    membershipType: MembershipType;
     occupation: string;
     isDelete?: boolean;
     createdAt: Date;

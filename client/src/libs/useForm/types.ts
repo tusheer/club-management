@@ -1,6 +1,4 @@
-
-   
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Validator } from './validator';
 
 export interface IEvent<T> {
@@ -22,12 +20,13 @@ export type onChange = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
 
 export interface IUserFormReturn<P> {
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    getInputProps:(props: IinputProps<P>) => {
+    getInputProps: (props: IinputProps<P>) => {
         name: keyof P;
         onChange: (event: any) => void;
     };
     state: P;
     errors: Erros<P>;
+    setState: Dispatch<SetStateAction<P>>;
 }
 
 export interface IuseFrom<P> {

@@ -69,6 +69,7 @@ const useForm = <P>({ onSubmit, formState }: IuseFrom<P>): IUserFormReturn<P> =>
         handleSubmit,
         getInputProps,
         state,
+        setState
     };
 };
 

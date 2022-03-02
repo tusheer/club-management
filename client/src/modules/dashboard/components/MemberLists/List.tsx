@@ -10,7 +10,7 @@ interface IList {
 const List: React.FC<IList> = ({ member }) => {
     return (
         <div className='rounded bg-white w-full gap-6  flex justify-between items-center mb-5 shadow-sm px-5 py-4'>
-            <div className='w-24 h-24 relative rounded overflow-hidden flex-shrink-0'>
+            <div className='w-24 border h-24 relative rounded overflow-hidden flex-shrink-0'>
                 <Image src={`${process.env.S3_URL}${member.avatar.url}`} layout='fill' priority />
             </div>
             <div className='flex w-10/12'>

@@ -5,13 +5,20 @@ import SingleSelect from '../../../common/components/SingleSelect';
 import Button from '../../../common/components/Button';
 import useForm, { validator } from '../../../../libs/useForm';
 import { MembershipType } from '../../../../types/Member';
+import { IMember } from '../../../../types/Member';
+import toast, { Toaster } from 'react-hot-toast';
+interface IFromState extends IMember {
+    file: File | null;
+}
 
 interface IEditAndAddModal {
     onClose: () => void;
     open: boolean;
+    onSubmit: (body: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => Promise<void>;
+    editMood?: boolean;
 }
 
-interface IMember {
+interface IMemberState {
     firstName: string;
     lastName: string;
     email: string;
@@ -25,32 +32,61 @@ interface IMember {
 
 const membershiptypes = ['VIP', 'CHILDREN', 'WOMEN', 'PLAYER', 'FOREIGNER', 'NORMAL'];
 
-const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
+const initialState: IMemberState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    number: '',
+    membershipType: {
+        value: '',
+        label: '',
+    },
+    occupation: '',
+};
+
+const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, editMood = false }) => {
     //useForm is a reusable hooks that can easily form handle and error handle.
     //https://github.com/tusheer/useForm
     //I have a plan to publish  it as a package
     const [image, setImage] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
-
-    const { handleSubmit, errors, state, getInputProps } = useForm<IMember>({
-        formState: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            number: '',
-            membershipType: {
-                value: '',
-                label: '',
-            },
-            occupation: '',
+    const [imageError, setImageError] = useState(false);
+    const { handleSubmit, errors, state, getInputProps, setState } = useForm<IMemberState>({
+        formState: initialState,
+        onSubmit: async () => {
+            try {
+                if (imageUrl && state.membershipType.value) {
+                    await toast.promise(
+                        onSubmit({
+                            firstName: state.firstName,
+                            lastName: state.lastName,
+                            email: state.email,
+                            number: state.number,
+                            file: image,
+                            membershipType: state.membershipType.value,
+                            occupation: state.occupation,
+                        }),
+                        {
+                            loading: <b>Submitting...</b>,
+                            success: <b>Successfully created </b>,
+                            error: <b>Something is wrong, Try again.</b>,
+                        }
+                    );
+                    setState(initialState);
+                } else {
+                    setImageError(true);
+                }
+            } catch (error) {
+                toast.error('Something is wrong, Try again.');
+            }
         },
-        onSubmit: () => {},
     });
 
     const onFileInputChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
         if (input.files === null) return;
         setImage(input.files[0]);
         setImageUrl(URL.createObjectURL(input.files[0]));
+        setImageError(false);
     };
 
     const url = image ? imageUrl : imageUrl.length ? imageUrl : '/static/assets/images/dummy-profile-pic.png';
@@ -134,7 +170,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
                                 })}
                             />
                         </div>
-                        <div className='h-32 w-32 bg-cm-red-500 border overflow-hidden relative'>
+                        <div className={`h-32 w-32  border overflow-hidden relative ${imageError ? 'border-2 border-cm-red-500' : ''}`}>
                             <img className='object-cover absolute top-0 left-0 bottom-0 right-0 w-full h-full ' src={url} alt='user' />
                             <div className='absolute h-10 w-full bottom-0 bg-black bg-opacity-50 hover:bg-opacity-70 cursor-pointer'>
                                 <div className=' h-10 w-full relative'>
@@ -154,6 +190,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
                         </div>
                     </form>
                 </div>
+                <Toaster position='bottom-left' />
             </div>
         </Modal>
     );
