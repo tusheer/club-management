@@ -22,7 +22,6 @@ const MemberLists = () => {
         limit: 6,
         offset: members.length,
         fetchAction: ({ limit, offset }) => {
-            console.log(paginationLoading);
             if (!paginationLoading && !loading) {
                 dispatch(fetchMembers({ limit, offset }));
             }
@@ -33,13 +32,13 @@ const MemberLists = () => {
         <div className='relative bg-cm-gray-200 pb-8 min-h-screen'>
             <ListBar />
             {loading ? (
-                <Spinner />
+                <Spinner className='mt-40' />
             ) : (
                 <div className='max-w-6xl px-5 mx-auto relative'>
                     {members.map((member) => {
                         return <List member={member} />;
                     })}
-                    {paginationLoading ? <Spinner /> : null}
+                    {paginationLoading ? <Spinner className="mt-10" /> : null}
                 </div>
             )}
         </div>
