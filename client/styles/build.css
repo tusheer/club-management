@@ -731,6 +731,9 @@ video {
 .mt-3 {
 	margin-top: 0.75rem;
 }
+.mt-4 {
+	margin-top: 1rem;
+}
 .block {
 	display: block;
 }
@@ -763,6 +766,21 @@ video {
 }
 .h-screen {
 	height: 100vh;
+}
+.h-72 {
+	height: 18rem;
+}
+.h-60 {
+	height: 15rem;
+}
+.h-32 {
+	height: 8rem;
+}
+.h-36 {
+	height: 9rem;
+}
+.max-h-72 {
+	max-height: 18rem;
 }
 .min-h-screen {
 	min-height: 100vh;
@@ -799,6 +817,15 @@ video {
 }
 .w-3\/12 {
 	width: 25%;
+}
+.w-56 {
+	width: 14rem;
+}
+.w-28 {
+	width: 7rem;
+}
+.w-32 {
+	width: 8rem;
 }
 .max-w-3xl {
 	max-width: 48rem;
@@ -892,11 +919,17 @@ video {
 .overflow-x-auto {
 	overflow-x: auto;
 }
+.overflow-y-auto {
+	overflow-y: auto;
+}
 .rounded {
 	border-radius: 0.25rem;
 }
 .rounded-full {
 	border-radius: 9999px;
+}
+.border {
+	border-width: 1px;
 }
 .border-t {
 	border-top-width: 1px;
@@ -923,8 +956,19 @@ video {
 	--tw-bg-opacity: 1;
 	background-color: rgba(242, 242, 242, var(--tw-bg-opacity));
 }
+.bg-black {
+	--tw-bg-opacity: 1;
+	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+.bg-cm-red-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(255, 91, 67, var(--tw-bg-opacity));
+}
 .bg-opacity-0 {
 	--tw-bg-opacity: 0;
+}
+.bg-opacity-50 {
+	--tw-bg-opacity: 0.5;
 }
 .fill-current {
 	fill: currentColor;
@@ -932,6 +976,10 @@ video {
 .object-cover {
 	-o-object-fit: cover;
 	   object-fit: cover;
+}
+.object-fill {
+	-o-object-fit: fill;
+	   object-fit: fill;
 }
 .p-5 {
 	padding: 1.25rem;
@@ -1052,6 +1100,15 @@ video {
 	--tw-text-opacity: 1;
 	color: rgba(184, 184, 190, var(--tw-text-opacity));
 }
+.opacity-30 {
+	opacity: 0.3;
+}
+.opacity-0 {
+	opacity: 0;
+}
+.opacity-50 {
+	opacity: 0.5;
+}
 .shadow-sm {
 	--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -1086,6 +1143,10 @@ video {
 	transition-duration: 300ms;
 }
 /* Chrome, Safari and Opera */
+
+.hover\:bg-opacity-70:hover {
+	--tw-bg-opacity: 0.7;
+}
 
 .focus\:outline-none:focus {
 	outline: 2px solid transparent;

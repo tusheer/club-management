@@ -36,9 +36,9 @@ const MemberLists = () => {
             ) : (
                 <div className='max-w-6xl px-5 mx-auto relative'>
                     {members.map((member) => {
-                        return <List member={member} />;
+                        return <List key={member.uid} member={member} />;
                     })}
-                    {paginationLoading ? <Spinner className="mt-10" /> : null}
+                    {paginationLoading ? <Spinner className='mt-10' /> : null}
                 </div>
             )}
         </div>

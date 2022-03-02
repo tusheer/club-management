@@ -46,6 +46,17 @@
         font-size: 0.875rem;
         color: #9c51e0;
     }
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
 
     &:focus-within {
         .input_wraper {
