@@ -54,7 +54,6 @@ const ListBar = () => {
                     </Button>
                 </div>
             </div>
-
             <EditAndAddModal open={addModalOpen} onClose={() => setAddModalOpen(false)} onSubmit={handleCreateMemberFormSubmit} />
         </React.Fragment>
     );

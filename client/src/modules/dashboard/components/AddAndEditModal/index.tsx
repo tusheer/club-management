@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from '../../../common/components/Modal';
 import TextInput from '../../../common/components/TextInput';
 import SingleSelect from '../../../common/components/SingleSelect';
@@ -16,6 +16,7 @@ interface IEditAndAddModal {
     open: boolean;
     onSubmit: (body: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => Promise<void>;
     editMood?: boolean;
+    selectedValue?: IMember;
 }
 
 interface IMemberState {
@@ -44,7 +45,7 @@ const initialState: IMemberState = {
     occupation: '',
 };
 
-const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, editMood = false }) => {
+const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, editMood = false, selectedValue }) => {
     //useForm is a reusable hooks that can easily form handle and error handle.
     //https://github.com/tusheer/useForm
     //I have a plan to publish  it as a package
@@ -68,7 +69,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                         }),
                         {
                             loading: <b>Submitting...</b>,
-                            success: <b>Successfully created </b>,
+                            success: <b>Successfully {editMood ? 'updated' : 'created'} </b>,
                             error: <b>Something is wrong, Try again.</b>,
                         }
                     );
@@ -82,6 +83,26 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
         },
     });
 
+    useEffect(() => {
+        if (selectedValue && editMood) {
+            setState({
+                firstName: selectedValue.firstName,
+                lastName: selectedValue.lastName,
+                occupation: selectedValue.occupation,
+                email: selectedValue.email,
+                membershipType: {
+                    label: selectedValue.membershipType,
+                    value: selectedValue.membershipType,
+                },
+                number: selectedValue.number,
+            });
+
+            setImageUrl(process.env.S3_URL + selectedValue.avatar.url);
+        } else {
+            setState(initialState);
+        }
+    }, [selectedValue]);
+
     const onFileInputChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
         if (input.files === null) return;
         setImage(input.files[0]);
@@ -94,7 +115,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
     return (
         <Modal onClose={onClose} open={open}>
             <div className='pt-10 pb-20'>
-                <h2 className='mb-8 text-center'>Add new Member</h2>
+                <h2 className='mb-8 text-center'> {editMood ? 'Edit' : 'Add new'} Member</h2>
 
                 <div className=' max-w-3xl w-full mx-auto px-5'>
                     <form onSubmit={handleSubmit}>
@@ -186,7 +207,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                         </div>
 
                         <div className='flex justify-end pb-10'>
-                            <Button type='submit'>Add Member</Button>
+                            <Button type='submit'> {editMood ? 'Edit' : 'Add'} Member</Button>
                         </div>
                     </form>
                 </div>

@@ -5,9 +5,10 @@ import { IMember } from '../../../../types/Member';
 
 interface IList {
     member: IMember;
+    onSelect: (value: IMember) => void;
 }
 
-const List: React.FC<IList> = ({ member }) => {
+const List: React.FC<IList> = ({ member, onSelect }) => {
     return (
         <div className='rounded bg-white w-full gap-6  flex justify-between items-center mb-5 shadow-sm px-5 py-4'>
             <div className='w-24 border h-24 relative rounded overflow-hidden flex-shrink-0'>
@@ -36,7 +37,9 @@ const List: React.FC<IList> = ({ member }) => {
                 </div>
             </div>
 
-            <Button size='md'>Edit</Button>
+            <Button onClick={() => onSelect(member)} size='md'>
+                Edit
+            </Button>
         </div>
     );
 };
