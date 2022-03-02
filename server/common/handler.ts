@@ -40,7 +40,7 @@ const findOne = async (modelName, request) => {
     return model;
 };
 
-const getWithPagination = async (modelName, { page, limit }: { page: number; limit: number }) => {
+const getWithPagination = async (modelName, { limit, offset }: { page: number; limit: number; offset: number }) => {
     const mongoModel = mongoose.models[modelName] as any;
     const myCustomLabels = {
         totalDocs: 'count',
@@ -50,8 +50,9 @@ const getWithPagination = async (modelName, { page, limit }: { page: number; lim
     const options = {
         sort: { createdAt: -1 },
         limit: limit,
-        page: page,
         customLabels: myCustomLabels,
+        lean: true,
+        offset: offset,
     };
     const model = await mongoModel.paginate({}, options);
     if (model == null) {

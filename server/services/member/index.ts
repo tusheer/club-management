@@ -11,8 +11,8 @@ import { NotFound } from '../../common/errors';
 
 const modelName = 'Member';
 
-const get = async ({ page, limit }: { page: number; limit: number }) => {
-    const result = await getWithPagination(modelName, { page, limit });
+const get = async ({ page, limit , offset }: { page: number; limit: number  ,offset : number}) => {
+    const result = await getWithPagination(modelName, { page, limit ,offset });
     return result;
 };
 

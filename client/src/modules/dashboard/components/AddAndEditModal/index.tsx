@@ -9,15 +9,12 @@ interface IEditAndAddModal {
     open: boolean;
 }
 
-const EditAndAddModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
-
-    
+const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
     return (
         <Modal onClose={onClose} open={open}>
             <div className='pt-10 pb-20'>
-                <h2>
-                    <h2 className='mb-8 text-center'>Add new Member</h2>
-                </h2>
+                <h2 className='mb-8 text-center'>Add new Member</h2>
+
                 <div className=' max-w-3xl w-full mx-auto px-5'>
                     <div className='mb-10 flex gap-5'>
                         <TextInput className='w-6/12' label='State' />
@@ -46,4 +43,4 @@ const EditAndAddModal: React.FC<IEditAndAddModal> = ({ onClose, open }) => {
     );
 };
 
-export default EditAndAddModal;
+export default AddAndEditModal;

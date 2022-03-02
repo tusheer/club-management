@@ -2,6 +2,7 @@ import express from 'express';
 import { save, update, deleteById, getById, get, validate } from '../../services/member';
 import { NotFound } from '../../common/errors';
 import { authenticateRequest, avatarUpload, handleValidation } from '../../middlewares/index';
+import randomId from '../../utils/randomId';
 const router = express.Router();
 
 const getByIdHandler = async (req, res, next) => {
@@ -27,8 +28,9 @@ const postHandler = async (req, res, next) => {
         if (req.files && req.files.length > 0) {
             newMember = {
                 ...req.body,
+                uid: 'CM-' + randomId(6),
                 avatar: {
-                    url: req.files[0].filename,
+                    url: '/static/uploads/avatars/' + req.files[0].filename,
                 },
             };
         } else {
@@ -68,9 +70,9 @@ const deleteHandler = async (req, res, next) => {
 };
 
 const getHandler = async (req, res, next) => {
-    const { page = 0, limit = 10 } = req.query;
+    const { page = 1, limit = 10, offset = 0 } = req.query;
     try {
-        const data = await get({ page, limit });
+        const data = await get({ page, limit, offset });
         res.status(200).send(data);
     } catch (error) {
         return next(error, req, res);

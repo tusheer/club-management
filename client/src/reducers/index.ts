@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import globalReducer from './globalReducer';
+import membersReducer from './membersReducer';
 
 const rootReducer = combineReducers({
-    global: globalReducer,
+    members: membersReducer,
 });
 
 export default rootReducer;
