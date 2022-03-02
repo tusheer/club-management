@@ -1,10 +1,10 @@
 import Joi from 'joi';
 
-const schema = Joi.object().keys({
+const createSchema = Joi.object().keys({
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
-    number : Joi.string().required(),
+    number: Joi.string().required(),
     avatar: Joi.object()
         .keys({
             url: Joi.string().required(),
@@ -14,9 +14,29 @@ const schema = Joi.object().keys({
     occupation: Joi.string().required(),
 });
 
-const validate = (data) => {
-    const result = schema.validate(data);
+const updateSchema = Joi.object().keys({
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    number: Joi.string().required(),
+    avatar: Joi.object()
+        .keys({
+            url: Joi.string().required(),
+        })
+        .optional(),
+    membershipType: Joi.string().valid('VIP', 'CHILDREN', 'WOMEN', 'PLAYER', 'FOREIGNER', 'NORMAL').required(),
+    occupation: Joi.string().required(),
+    _id: Joi.string().required(),
+    uid: Joi.string().required(),
+});
+
+const createValidate = (data) => {
+    const result = createSchema.validate(data);
+    return result;
+};
+const updateValidate = (data) => {
+    const result = updateSchema.validate(data);
     return result;
 };
 
-export default validate;
+export { createValidate, updateValidate };

@@ -7,7 +7,7 @@ const save = async (item, model) => {
 };
 
 const update = async (item, modelName) => {
-    let doc = await mongoose.models[modelName].findOneAndUpdate({ _id: item._id }, item);
+    let doc = await mongoose.models[modelName].findOneAndUpdate({ _id: item._id }, item, { new: true });
     return doc;
 };
 

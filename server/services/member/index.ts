@@ -5,14 +5,14 @@ import {
     deleteById as deleteMember,
     getWithPagination,
 } from '../../common/handler';
-import validate from './validation';
+import { createValidate, updateValidate } from './validation';
 import Member, { IMember } from '../../models/Member';
 import { NotFound } from '../../common/errors';
 
 const modelName = 'Member';
 
-const get = async ({ page, limit , offset }: { page: number; limit: number  ,offset : number}) => {
-    const result = await getWithPagination(modelName, { page, limit ,offset });
+const get = async ({ page, limit, offset }: { page: number; limit: number; offset: number }) => {
+    const result = await getWithPagination(modelName, { page, limit, offset });
     return result;
 };
 
@@ -39,4 +39,4 @@ const getById = async (id: string) => {
     return item;
 };
 
-export { save, update, deleteById, getById, get, validate };
+export { save, update, deleteById, getById, get, createValidate, updateValidate };

@@ -1,5 +1,5 @@
 import express from 'express';
-import { save, update, deleteById, getById, get, validate } from '../../services/member';
+import { save, update, deleteById, getById, get, createValidate, updateValidate } from '../../services/member';
 import { NotFound } from '../../common/errors';
 import { authenticateRequest, avatarUpload, handleValidation } from '../../middlewares/index';
 import randomId from '../../utils/randomId';
@@ -50,10 +50,27 @@ const postHandler = async (req, res, next) => {
 };
 
 const putHandler = async (req, res, next) => {
+    const body = req.body;
+    let updatedMember;
     try {
-        const body = req.body;
-        const id = await update(body);
-        res.status(200).send(id);
+        if (req.files && req.files.length > 0) {
+            updatedMember = {
+                ...body,
+                avatar: {
+                    url: '/static/uploads/avatars/' + req.files[0].filename,
+                },
+            };
+        } else {
+            updatedMember = {
+                ...req.body,
+            };
+        }
+        const member = await update(updatedMember);
+        res.status(200).send({
+            success: true,
+            message: 'Updated successfully',
+            result: member,
+        });
     } catch (error) {
         return next(error, req, res);
     }
@@ -81,8 +98,8 @@ const getHandler = async (req, res, next) => {
 
 router.get('/', authenticateRequest, getHandler);
 router.get('/:id', authenticateRequest, getByIdHandler);
-router.post('/', authenticateRequest, avatarUpload, handleValidation(validate), postHandler);
-router.put('/', authenticateRequest, putHandler);
+router.post('/', authenticateRequest, avatarUpload, handleValidation(createValidate), postHandler);
+router.put('/', authenticateRequest, avatarUpload, handleValidation(updateValidate), putHandler);
 router.delete('/:id', authenticateRequest, deleteHandler);
 
 export default router;

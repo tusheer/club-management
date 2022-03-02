@@ -14,7 +14,7 @@ interface IFromState extends IMember {
 interface IEditAndAddModal {
     onClose: () => void;
     open: boolean;
-    onSubmit: (body: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => Promise<void>;
+    onSubmit: (body: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid' | '_id'>) => Promise<void>;
     editMood?: boolean;
     selectedValue?: IMember;
 }
@@ -176,7 +176,10 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                                 errorText={errors.membershipType?.message[0]}
                                 {...getInputProps({
                                     name: 'membershipType',
-                                    validate: validator.custom((type) => type.value !== '').withMessage('Membership type is required'),
+                                    validate: validator
+                                        .isRequire()
+                                        .withMessage('Membership type in required')
+                                        .findKey((type) => type.value),
                                     onChange: (value) => value,
                                 })}
                             />
@@ -207,7 +210,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                         </div>
 
                         <div className='flex justify-end pb-10'>
-                            <Button type='submit'> {editMood ? 'Edit' : 'Add'} Member</Button>
+                            <Button type='submit'> {editMood ? 'Update' : 'Add'} Member</Button>
                         </div>
                     </form>
                 </div>

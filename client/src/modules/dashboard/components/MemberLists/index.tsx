@@ -8,13 +8,17 @@ import { useAppSelector } from '../../../../store';
 import Spinner from '../../../common/components/Spinner';
 import useInfiniteScroll from '../../../common/hooks/useInfiniteScroll';
 import AddAndEditModal from '../AddAndEditModal';
+import editMemberAction from '../../../../api/members/editMember';
+import sleep from '../../../../utils/sleep';
+import { editMember } from '../../../../reducers/membersReducer';
+
 interface IFromState extends IMember {
     file: File | null;
 }
 const MemberLists = () => {
     const dispatch = useAppDispatch();
     const { loading, members, meta, paginationLoading } = useAppSelector((state) => state.members);
-    const [openEditModal, setOpenEditModal] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
     const [selectedMember, setSelectedMember] = useState<IMember>();
     useEffect(() => {
         if (!members.length) {
@@ -24,7 +28,7 @@ const MemberLists = () => {
 
     const handleSelectMember = (value: IMember) => {
         setSelectedMember(value);
-        setOpenEditModal(true);
+        setEditModalOpen(true);
     };
 
     useInfiniteScroll({
@@ -38,8 +42,23 @@ const MemberLists = () => {
         },
     });
 
-    const handleEditMemberFormSubmit = async (fromData: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => {
+    const handleEditMemberFormSubmit = async (
+        fromData: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid' | '_id'>
+    ) => {
         try {
+            //I know this is something weird, but since we have a local server we cannot experience the loading time and interaction. And I never doing that in real work.
+            process.env.NODE_ENV !== 'production' && (await sleep(1000));
+            if (selectedMember) {
+                const response = await editMemberAction({
+                    ...fromData,
+                    uid: selectedMember.uid,
+                    _id: selectedMember._id,
+                });
+                if (response.success) {
+                    dispatch(editMember(response.result));
+                    setEditModalOpen(false);
+                }
+            }
         } catch (error) {
             throw new Error('Invalid request');
         }
@@ -59,8 +78,8 @@ const MemberLists = () => {
                 </div>
             )}
             <AddAndEditModal
-                open={openEditModal}
-                onClose={() => setOpenEditModal(false)}
+                open={editModalOpen}
+                onClose={() => setEditModalOpen(false)}
                 onSubmit={handleEditMemberFormSubmit}
                 editMood={true}
                 selectedValue={selectedMember}

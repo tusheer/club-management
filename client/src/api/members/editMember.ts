@@ -1,17 +1,17 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../config';
-import { IMember, MembershipType } from '../../types/Member';
+import { IMember } from '../../types/Member';
 
-interface ICreateMember extends IMember {
+interface IEditMember extends IMember {
     file: File | null;
 }
-interface ICreateResponse {
+interface IUpdateResponse {
     success: string;
     message: string;
     result: IMember;
 }
 
-const createMemberAction = async (body: Omit<ICreateMember, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid' | "_id">) => {
+const editMemberAction = async (body: Omit<IEditMember, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' >) => {
     const formData = new FormData();
 
     Object.entries(body).forEach(([key, value]) => {
@@ -21,11 +21,11 @@ const createMemberAction = async (body: Omit<ICreateMember, 'isDelete' | 'create
     });
 
     try {
-        const response = await http.post<typeof formData, AxiosResponse<ICreateResponse>>('/members', formData);
+        const response = await http.put<typeof formData, AxiosResponse<IUpdateResponse>>('/members', formData);
         return response.data;
     } catch (error) {
         throw new Error();
     }
 };
 
-export default createMemberAction;
+export default editMemberAction;

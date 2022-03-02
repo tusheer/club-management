@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Button from '../../../common/components/Button';
 import { IMember } from '../../../../types/Member';
+import dateFormat from '../../../../utils/dateFormat';
 
 interface IList {
     member: IMember;
@@ -32,8 +33,8 @@ const List: React.FC<IList> = ({ member, onSelect }) => {
                     <h6 className='font-medium text-cm-gray-800'>{member.email}</h6>
                 </div>
                 <div className='w-3/12'>
-                    <p className='text-sm  text-cm-gray-500 mb-2'>Regetration Date</p>
-                    <h6 className='font-medium text-cm-gray-800'>{member.createdAt}</h6>
+                    <p className='text-sm  text-cm-gray-500 mb-2'> Registration Date</p>
+                    <h6 className='font-medium text-cm-gray-800'>{dateFormat(member.createdAt)}</h6>
                 </div>
             </div>
 

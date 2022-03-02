@@ -17,7 +17,7 @@ const ListBar = () => {
     const [addModalOpen, setAddModalOpen] = useState(false);
     const { ref, position } = useScrollPosition();
 
-    const handleCreateMemberFormSubmit = async (fromData: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid'>) => {
+    const handleCreateMemberFormSubmit = async (fromData: Omit<IFromState, 'isDelete' | 'createdAt' | 'updatedAt' | 'avatar' | 'uid' | "_id">) => {
         try {
             //I know this is something weird, but since we have a local server we cannot experience the loading time and interaction. And I never doing that in real work.
             process.env.NODE_ENV !== 'production' && (await sleep(1000));

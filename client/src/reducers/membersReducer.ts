@@ -24,6 +24,10 @@ const globalSlice = createSlice({
         addNewMember(state, action: PayloadAction<IMember>) {
             state.members = [action.payload, ...state.members];
         },
+        editMember(state, action: PayloadAction<IMember>) {
+            const findMemberIndex = state.members.findIndex((member) => member._id === action.payload._id);
+            state.members[findMemberIndex] = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchMembers.fulfilled, (state, action) => {
@@ -49,5 +53,5 @@ export const fetchMembers = createAsyncThunk('members/fetch', async ({ limit, of
     return response;
 });
 
-export const { addNewMember } = globalSlice.actions;
+export const { addNewMember, editMember } = globalSlice.actions;
 export default globalSlice.reducer;
