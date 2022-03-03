@@ -73,7 +73,6 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                             error: <b>Something is wrong, Try again.</b>,
                         }
                     );
-                    setState(initialState);
                 } else {
                     setImageError(true);
                 }
@@ -172,7 +171,7 @@ const AddAndEditModal: React.FC<IEditAndAddModal> = ({ onClose, open, onSubmit, 
                                 data={state.membershipType}
                                 items={membershiptypes.map((type) => ({ value: type, label: type }))}
                                 label='Membership type'
-                                error={errors.membershipType?.error}
+                                error={errors.membershipType?.error && !state.membershipType.value}
                                 errorText={errors.membershipType?.message[0]}
                                 {...getInputProps({
                                     name: 'membershipType',

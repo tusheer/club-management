@@ -31,6 +31,8 @@ const MemberLists = () => {
         setEditModalOpen(true);
     };
 
+
+
     useInfiniteScroll({
         totalCount: meta?.count || 0,
         limit: 6,
@@ -71,8 +73,8 @@ const MemberLists = () => {
                 <Spinner className='mt-40' />
             ) : (
                 <div className='max-w-6xl px-5 mx-auto relative'>
-                    {members.map((member) => {
-                        return <List onSelect={handleSelectMember} key={member.uid} member={member} />;
+                    {members.map((member, index) => {
+                        return <List onSelect={handleSelectMember} key={index} member={member} />;
                     })}
                     {paginationLoading ? <Spinner className='mt-10' /> : null}
                 </div>

@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { http } from '../../../config';
+import { IUser } from '../../types/User';
 
 interface ISingupBody {
     email: string;
@@ -11,7 +12,7 @@ interface ISingupBody {
 interface SignupResponse {
     authToken: string;
     message: string;
-    result: ISingupBody;
+    result: IUser;
 }
 
 const signupAction = async (body: ISingupBody) => {

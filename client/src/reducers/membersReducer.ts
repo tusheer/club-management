@@ -17,7 +17,7 @@ const initialState: IState = {
     paginationLoading: false,
 };
 
-const globalSlice = createSlice({
+const memebersSlice = createSlice({
     name: 'members',
     initialState,
     reducers: {
@@ -62,5 +62,5 @@ export const fetchMembers = createAsyncThunk('members/fetch', async ({ limit, of
     return response;
 });
 
-export const { addNewMember, editMember } = globalSlice.actions;
-export default globalSlice.reducer;
+export const { addNewMember, editMember } = memebersSlice.actions;
+export default memebersSlice.reducer;

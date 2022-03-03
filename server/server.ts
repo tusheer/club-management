@@ -3,6 +3,7 @@ import { app, connectWithDb } from './core/index';
 import { handleRequest, handleError } from './middlewares';
 import initModules from './modules';
 import express, { Express } from 'express';
+
 dotenv.config();
 
 const port = process.env.PORT || 4000;
@@ -18,6 +19,7 @@ const start = async (): Promise<void> => {
 
     try {
         await configureRoutes(app);
+
         app.listen(port, async () => {
             console.log('server is running on port', port);
             await connectWithDb();

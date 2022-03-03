@@ -1,11 +1,18 @@
+import { useRouter } from 'next/router';
 import React from 'react';
+import { logoutUser } from '../../../../reducers/userReducer';
 import Dropdown from '../../../common/components/Dropdown';
 import HeaderWrapper, { Icon } from '../../../common/components/HeaderWrapper';
-import { useAppSelector } from '../../../common/hooks';
+import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 
 const Header = () => {
     const { meta } = useAppSelector((state) => state.members);
-
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    const handleLogout = () => {
+        dispatch(logoutUser());
+        router.push('/');
+    };
     return (
         <HeaderWrapper height={96}>
             <div className='max-w-6xl justify-between px-5 mx-auto h-full flex items-center'>
@@ -30,7 +37,7 @@ const Header = () => {
                             </Dropdown.Menu>
                             <Dropdown.Item>
                                 {({}) => (
-                                    <div className='absolute mt-3 right-0 p-1 bg-white rounded shadow-xl  w-44'>
+                                    <div onClick={handleLogout} className='absolute mt-3 right-0 p-1 bg-white rounded shadow-xl  w-44'>
                                         <div className='px-5 py-3 cursor-pointer select-none font-medium hover:bg-cm-gray-200'>Logout</div>
                                     </div>
                                 )}

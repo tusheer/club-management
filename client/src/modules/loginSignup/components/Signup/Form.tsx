@@ -5,8 +5,9 @@ import useForm, { validator } from '../../../../libs/useForm';
 import signupAction from '../../../../api/auth/signup';
 import toast, { Toaster } from 'react-hot-toast';
 import sleep from '../../../../utils/sleep';
-import Cookies from 'js-cookie';
+import { useAppDispatch } from '../../../common/hooks';
 import { useRouter } from 'next/router';
+import { setUser } from '../../../../reducers/userReducer';
 
 export interface IFormState {
     firstName: string;
@@ -17,6 +18,7 @@ export interface IFormState {
 }
 
 const Form = () => {
+    const dispatch = useAppDispatch();
     const router = useRouter();
     //useForm is a reusable hooks that can easily form handle and error handle.
     //https://github.com/tusheer/useForm
@@ -50,7 +52,12 @@ const Form = () => {
                 password: state.password,
             });
             if (response) {
-                Cookies.set('token', response.authToken);
+                dispatch(
+                    setUser({
+                        user: response.result,
+                        token: response.authToken,
+                    })
+                );
                 router.push('/dashboard');
             }
         } catch (error) {

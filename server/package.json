@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.ts",
     "scripts": {
-        "serve": "nodemon server.ts",
+        "dev": "nodemon server.ts",
         "build": "tsc --project ./"
     },
     "author": "",

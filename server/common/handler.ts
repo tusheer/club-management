@@ -28,8 +28,8 @@ const getById = async (id, modelName) => {
     return model;
 };
 
-const getAll = async (modelName, { skip, limit }: { skip: number; limit: number }) => {
-    let model = await mongoose.models[modelName].find().skip(skip).limit(limit);
+const getAll = async (modelName) => {
+    let model = await mongoose.models[modelName].find();
     if (model == null) {
         throw new Error('Product not found by the id: ');
     }
@@ -51,7 +51,6 @@ const getWithPagination = async (modelName, { limit, offset }: { page: number; l
         sort: { createdAt: -1 },
         limit: limit,
         customLabels: myCustomLabels,
-        lean: true,
         offset: offset,
     };
     const model = await mongoModel.paginate({}, options);
