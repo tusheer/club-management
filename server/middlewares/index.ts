@@ -71,7 +71,7 @@ const authenticateRequest = async (req, res, next) => {
 };
 
 function avatarUpload(req, res, next) {
-    const upload = uploader('avatars', ['image/jpeg', 'image/jpg', 'image/png'], 1000000, 'Only .jpg, jpeg or .png format allowed!');
+    const upload = uploader('avatars', ['image/jpeg', 'image/jpg', 'image/png'], 100000000, 'Only .jpg, jpeg or .png format allowed!');
 
     // call the middleware function
     upload.any()(req, res, (err) => {

@@ -23,6 +23,15 @@ const globalSlice = createSlice({
     reducers: {
         addNewMember(state, action: PayloadAction<IMember>) {
             state.members = [action.payload, ...state.members];
+            if (state.meta) {
+                state.meta.count = state.meta?.count + 1;
+            } else {
+                const meta: IMeta = {
+                    count: 1,
+                    offset: 1,
+                };
+                state.meta = meta;
+            }
         },
         editMember(state, action: PayloadAction<IMember>) {
             const findMemberIndex = state.members.findIndex((member) => member._id === action.payload._id);

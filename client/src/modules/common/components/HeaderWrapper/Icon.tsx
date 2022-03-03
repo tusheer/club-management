@@ -6,7 +6,7 @@ interface IIconWraperProps {
 
 const Icon: React.FC<IIconWraperProps> = ({ children }) => {
 	return (
-		<div className="h-10 w-10 cursor-pointer bg-dh-green-800 rounded-full flex items-center justify-center">
+		<div className="h-10 w-10 cursor-pointer bg-cm-purple-800 rounded-full bg-opacity-95 flex items-center justify-center">
 			<Fragment>{children}</Fragment>
 		</div>
 	);
