@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
 
 type MembershipType = 'VIP' | 'CHILDREN' | 'WOMEN' | 'PLAYER' | 'FOREIGNER' | 'NORMAL';
 
@@ -46,7 +45,6 @@ const schema = new Schema<IMember>(
     { timestamps: true }
 );
 
-schema.plugin(mongoosePaginate);
 const Member = model<IMember>('Member', schema);
 
 export default Member;

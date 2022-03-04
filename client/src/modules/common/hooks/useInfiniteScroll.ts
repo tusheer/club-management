@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface IuseInfiniteScroll {
-    fetchAction: ({ limit, offset }: { limit: number; offset: number }) => void;
+    fetchAction: ({ limit, skip }: { limit: number; skip: number }) => void;
     limit: number;
-    offset: number;
+    skip: number;
     totalCount: number;
 }
 
-const useInfiniteScroll = ({ offset, limit, fetchAction, totalCount }: IuseInfiniteScroll) => {
+const useInfiniteScroll = ({ skip, limit, fetchAction, totalCount }: IuseInfiniteScroll) => {
     const scrollActiveRef = useRef<boolean>(false);
 
     const handleScroll = (event: Event) => {
@@ -18,8 +18,8 @@ const useInfiniteScroll = ({ offset, limit, fetchAction, totalCount }: IuseInfin
                 scrollActiveRef.current = true;
             }
         } else {
-            if (offset < totalCount) {
-                fetchAction({ limit, offset });
+            if (skip < totalCount) {
+                fetchAction({ limit, skip });
             }
             scrollActiveRef.current = false;
         }
@@ -29,7 +29,7 @@ const useInfiniteScroll = ({ offset, limit, fetchAction, totalCount }: IuseInfin
         window.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [scrollActiveRef.current, totalCount, offset]);
+    }, [scrollActiveRef.current, totalCount, skip]);
 };
 
 export default useInfiniteScroll;

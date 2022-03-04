@@ -40,24 +40,20 @@ const findOne = async (modelName, request) => {
     return model;
 };
 
-const getWithPagination = async (modelName, { limit, offset }: { page: number; limit: number; offset: number }) => {
-    const mongoModel = mongoose.models[modelName] as any;
-    const myCustomLabels = {
-        totalDocs: 'count',
-        docs: 'result',
-        meta: 'meta',
+const getWithPagination = async (modelName, { limit, skip }: { page: number; limit: number; skip: number }) => {
+    const mongoModel = mongoose.models[modelName];
+
+    const totalCount = await mongoModel.count();
+    const result = await mongoModel.find().sort({ createdAt: -1 }).skip(skip).limit(limit).exec();
+
+    return {
+        result: result,
+        meta: {
+            limit,
+            skip,
+            count: totalCount,
+        },
     };
-    const options = {
-        sort: { createdAt: -1 },
-        limit: limit,
-        customLabels: myCustomLabels,
-        offset: offset,
-    };
-    const model = await mongoModel.paginate({}, options);
-    if (model == null) {
-        throw new Error('Product not found by the id: ');
-    }
-    return model;
 };
 
 export { save, update, deleteById, getById, getAll, getWithPagination, findOne };

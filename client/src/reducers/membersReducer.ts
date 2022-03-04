@@ -28,7 +28,7 @@ const memebersSlice = createSlice({
             } else {
                 const meta: IMeta = {
                     count: 1,
-                    offset: 1,
+                    skip: 1,
                 };
                 state.meta = meta;
             }
@@ -56,9 +56,9 @@ const memebersSlice = createSlice({
     },
 });
 
-export const fetchMembers = createAsyncThunk('members/fetch', async ({ limit, offset }: { limit: number; offset: number }) => {
+export const fetchMembers = createAsyncThunk('members/fetch', async ({ limit, skip }: { limit: number; skip: number }) => {
     process.env.NODE_ENV !== 'production' && (await sleep(500));
-    const response = await getAllMembers({ limit, offset });
+    const response = await getAllMembers({ limit, skip });
     return response;
 });
 

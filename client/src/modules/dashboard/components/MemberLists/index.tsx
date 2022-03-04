@@ -22,7 +22,7 @@ const MemberLists = () => {
     const [selectedMember, setSelectedMember] = useState<IMember>();
     useEffect(() => {
         if (!members.length) {
-            dispatch(fetchMembers({ limit: 6, offset: 0 }));
+            dispatch(fetchMembers({ limit: 6, skip: 0 }));
         }
     }, []);
 
@@ -31,15 +31,13 @@ const MemberLists = () => {
         setEditModalOpen(true);
     };
 
-
-
     useInfiniteScroll({
         totalCount: meta?.count || 0,
         limit: 6,
-        offset: members.length,
-        fetchAction: ({ limit, offset }) => {
+        skip: members.length,
+        fetchAction: ({ limit, skip }) => {
             if (!paginationLoading && !loading) {
-                dispatch(fetchMembers({ limit, offset }));
+                dispatch(fetchMembers({ limit, skip }));
             }
         },
     });
@@ -73,8 +71,8 @@ const MemberLists = () => {
                 <Spinner className='mt-40' />
             ) : (
                 <div className='max-w-6xl px-5 mx-auto relative'>
-                    {members.map((member, index) => {
-                        return <List onSelect={handleSelectMember} key={index} member={member} />;
+                    {members.map((member) => {
+                        return <List onSelect={handleSelectMember} key={member._id} member={member} />;
                     })}
                     {paginationLoading ? <Spinner className='mt-10' /> : null}
                 </div>
