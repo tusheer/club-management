@@ -8,7 +8,7 @@ interface ISinginBody {
 }
 
 interface IParams {
-    offset: number;
+    skip: number;
     limit: number;
 }
 

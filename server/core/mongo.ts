@@ -19,15 +19,18 @@ const connectWithDb = async (): Promise<void> => {
     const memberData = await getAllMembers();
     if (!memberData.length) {
         console.log('Connected to MongoDB');
-        await Promise.all(
-            memberJson.map(async (member) => {
-                await save({
-                    ...(member as any),
+        for (let i = 0; i < memberJson.length; i++) {
+            create(() =>
+                save({
+                    ...(memberJson[i] as any),
                     uid: 'CM-' + randomId(6),
-                });
-            })
-        );
+                })
+            );
+        }
         console.log('Seeded members');
     }
 };
+
+const create = (fn) => new Promise((resolve) => setTimeout(() => resolve(fn()), 100));
+
 export default connectWithDb;
