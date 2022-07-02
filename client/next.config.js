@@ -9,7 +9,7 @@ const nextConfig = {
     JWT_SECRET: process.env.NEXT_PUBLIC_JWT_SECRET
   },
   images: {
-    domains: ["localhost", process.env.NEXT_PUBLIC_S3_URL],
+    domains: [],
   }
 
 }
