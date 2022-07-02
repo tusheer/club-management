@@ -35,6 +35,7 @@ const getAll = async (modelName) => {
     }
     return model;
 };
+
 const findOne = async (modelName, request) => {
     let model = await mongoose.models[modelName].findOne(request);
     return model;
